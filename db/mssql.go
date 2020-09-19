@@ -44,7 +44,6 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 	var finalValues [][]interface{}
 	BlankRow := make([]interface{}, 3)
 	finalValues = append(finalValues, BlankRow)
-	fmt.Println("adding rows to finalValues")
 	// var NumericToString []uint8
 	// var QuotationDate string
 	// var LostDate string
@@ -57,7 +56,6 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 	// }
 
 	rawResult := make([][]byte, len(Columns))
-	result := make([]interface{}, len(Columns))
 
 	dest := make([]interface{}, len(Columns)) // A temporary interface{} slice
 	for i, _ := range rawResult {
@@ -65,6 +63,7 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 	}
 
 	for Rows.Next() {
+		result := make([]interface{}, len(Columns))
 		err = Rows.Scan(dest...)
 		if err != nil {
 			fmt.Println("Failed to scan row", err)
@@ -91,6 +90,7 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 		// singleRow[7] = B2S(NumericToString)
 		// singleRow[3] = QuotationDate
 		// singleRow[11] = LostDate[:10]
+		fmt.Println("adding rows to finalValues")
 		finalValues = append(finalValues, result)
 	}
 
