@@ -1,0 +1,10 @@
+{
+    "SpreadsheetID" : "1UNAEkBl-roGkPt1hVR2ABguxrgq-ETvAs1VYxDs747w",
+    "SheetNameWithRange":"IOM_Analysis!A2",
+    "MSSQLHost":"localhost",
+    "DatabaseName":"TestDB",
+    "UserName":"SA",
+    "Password":"Test@1234",
+    "Query":"Execute BI_IOM_Analysis_Data1",
+    "OldDataRequired":false
+}
