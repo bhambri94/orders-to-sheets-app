@@ -6,6 +6,7 @@ import (
 
 	"github.com/bhambri94/orders-to-sheets-app/configs"
 	"github.com/bhambri94/orders-to-sheets-app/db"
+	"github.com/bhambri94/orders-to-sheets-app/sheets"
 )
 
 func main() {
@@ -24,5 +25,5 @@ func main() {
 
 	finalValues := db.GetLatestDataFromSQL(fromDateTime)
 	fmt.Println(finalValues)
-	// sheets.BatchAppend(configs.Configurations.SheetNameWithRange, finalValues)
+	sheets.BatchAppend(configs.Configurations.SheetNameWithRange, finalValues)
 }
