@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/bhambri94/orders-to-sheets-app/configs"
 	"github.com/bhambri94/orders-to-sheets-app/db"
+	"github.com/bhambri94/orders-to-sheets-app/purchase"
 	"github.com/bhambri94/orders-to-sheets-app/sheets"
 )
 
@@ -22,8 +24,14 @@ func main() {
 		fromDateTime = currentTime.Add(time.Duration(-HoursCount) * time.Hour).Format("2006-01-02")
 	}
 	fmt.Println("Fetching results from Date: " + fromDateTime)
-
-	finalValues := db.GetLatestDataFromSQL(fromDateTime)
-	fmt.Println(finalValues)
-	sheets.BatchAppend(configs.Configurations.SheetNameWithRange, finalValues)
+	Month := strings.ToUpper(time.Now().Month().String())
+	values := db.GetLatestDataFromSQL(fromDateTime)
+	SheetName := configs.Configurations.SheetNameWithoutRange + Month
+	sheets.CreateSheetIfNotPresent(SheetName)
+	// values := sheets.BatchGet("IOM_Analysis_SEP!A2:Z5000")
+	fmt.Println(values)
+	finalvalues := purchase.GetFinalValuesFormatted(values)
+	fmt.Println("FinalValues from Sheet are:")
+	fmt.Println(finalvalues)
+	sheets.BatchAppend(SheetName, finalvalues)
 }

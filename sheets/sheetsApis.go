@@ -221,3 +221,37 @@ func ClearSheet(SheetName string) {
 		}
 	}
 }
+
+func CreateSheetIfNotPresent(SheetName string) {
+	readRange := SheetName
+	var itt bool
+	if srv == nil {
+		srv = getClient()
+	}
+	spreadsheetId = config.Configurations.SpreadsheetID
+	_, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
+	if err != nil {
+		fmt.Printf("Unable to retrieve data from sheet name: %v", err)
+		fmt.Println()
+		itt = true
+	}
+
+	if itt {
+		fmt.Println("Creating new sheet with sheetname: " + SheetName)
+		req := sheets.Request{
+			AddSheet: &sheets.AddSheetRequest{
+				Properties: &sheets.SheetProperties{
+					Title: SheetName,
+				},
+			},
+		}
+		rbb := &sheets.BatchUpdateSpreadsheetRequest{
+			Requests: []*sheets.Request{&req},
+		}
+		_, err := srv.Spreadsheets.BatchUpdate(spreadsheetId, rbb).Context(context.Background()).Do()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+	}
+}
