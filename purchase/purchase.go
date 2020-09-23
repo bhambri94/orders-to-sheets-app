@@ -1,11 +1,14 @@
 package purchase
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
-func GetFinalValuesFormatted(values [][]interface{}) [][]interface{} {
+func GetFinalValuesFormatted(values [][]interface{}, LastIndex int) [][]interface{} {
 	var finalValues [][]interface{}
-	iterator := 1
-	SiNo := 0
+	iterator := 0
+	SiNo := LastIndex
 	ItemCode := ""
 	BlankRow := []interface{}{""}
 	for iterator < len(values) {
@@ -14,6 +17,25 @@ func GetFinalValuesFormatted(values [][]interface{}) [][]interface{} {
 			iterator++
 			continue
 		}
+
+		if !strings.Contains(values[iterator][4].(string), "STR") {
+			iterator++
+			continue
+		}
+
+		if len(values[iterator][3].(string)) > 10 {
+			values[iterator][3] = values[iterator][3].(string)[:10]
+		}
+		if len(values[iterator][5].(string)) > 10 {
+			values[iterator][5] = values[iterator][5].(string)[:10]
+		}
+		if len(values[iterator][12].(string)) > 10 {
+			values[iterator][12] = values[iterator][12].(string)[:10]
+		}
+		if len(values[iterator][21].(string)) > 10 {
+			values[iterator][21] = values[iterator][21].(string)[:10]
+		}
+
 		if ItemCode != values[iterator][6] {
 			finalValues = append(finalValues, BlankRow)
 			ItemCode = values[iterator][6].(string)

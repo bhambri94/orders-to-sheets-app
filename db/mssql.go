@@ -10,7 +10,7 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
-func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
+func GetLatestDataFromSQL(fromDateTime string, toDateTime string) [][]interface{} {
 	var DBConnection *sql.DB
 	var err error
 	connectString := "sqlserver://" + configs.Configurations.UserName + ":" + configs.Configurations.Password + "@" + configs.Configurations.MSSQLHost + "?database=" + configs.Configurations.DatabaseName + "&connection+timeout=300"
@@ -33,10 +33,9 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 		}
 	}
 
-	println("Running Query -> " + configs.Configurations.Query)
-	Rows, err := DBConnection.Query(configs.Configurations.Query)
+	println("Running Query -> " + configs.Configurations.Query + " '" + fromDateTime + "' , '" + toDateTime + "'")
+	Rows, err := DBConnection.Query(configs.Configurations.Query + " '" + fromDateTime + "' , '" + toDateTime + "'")
 
-	// _, err := db.ExecContext(ctx, configs.Configurations.Query, sql.Named("Arg1", sql.Out{Dest: &outArg}))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,17 +43,7 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 	var finalValues [][]interface{}
 	BlankRow := make([]interface{}, 3)
 	finalValues = append(finalValues, BlankRow)
-	// var NumericToString []uint8
-	// var QuotationDate string
-	// var LostDate string
 	Columns, _ := Rows.Columns()
-	// singleRow := make([]interface{}, len(Columns))
-	// for i, _ := range Columns {
-	// 	singleRow[i] = new(sql.RawBytes)
-	// 	//check column name, if it is id, and you know it is integer
-	// 	//vals[i] = new(int)
-	// }
-
 	rawResult := make([][]byte, len(Columns))
 
 	dest := make([]interface{}, len(Columns)) // A temporary interface{} slice
@@ -79,17 +68,6 @@ func GetLatestDataFromSQL(fromDateTime string) [][]interface{} {
 
 		fmt.Printf("%#v\n", result)
 
-		// if err := Rows.Scan(singleRow...); err != nil {
-		// 	log.Fatal(err)
-		// }
-		// fmt.Println(singleRow[0].(string))
-
-		// if err := Rows.Scan(&singleRow[0], &singleRow[1], &singleRow[2], &QuotationDate, &singleRow[4], &singleRow[5], &singleRow[6], &NumericToString, &singleRow[8], &singleRow[9], &singleRow[10], &LostDate); err != nil {
-		// 	log.Fatal(err)
-		// }
-		// singleRow[7] = B2S(NumericToString)
-		// singleRow[3] = QuotationDate
-		// singleRow[11] = LostDate[:10]
 		fmt.Println("adding rows to finalValues")
 		finalValues = append(finalValues, result)
 	}

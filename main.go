@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -14,24 +15,28 @@ import (
 func main() {
 	configs.SetConfig()
 	var fromDateTime string
-	if configs.Configurations.OldDataRequired {
-		currentTime := time.Date(2019, time.January, 1, 18, 59, 59, 0, time.UTC) //This can be used to manually fill a sheet from desired date
-		fromDateTime = currentTime.Format("2006-01-02")
-	} else {
-		// loc, _ := time.LoadLocation("Asia/Kolkata") .In(loc)
-		currentTime := time.Now()
-		HoursCount := 24
-		fromDateTime = currentTime.Add(time.Duration(-HoursCount) * time.Hour).Format("2006-01-02")
-	}
-	fmt.Println("Fetching results from Date: " + fromDateTime)
+	var toDateTime string
+	currentTime := time.Now()
+	HoursCount := configs.Configurations.OldDateInHours
+	fromDateTime = currentTime.Add(time.Duration(-HoursCount) * time.Hour).Format("2006-01-02")
+	toDateTime = currentTime.Format("2006-01-02")
+	fmt.Println("Fetching results from Date: "+fromDateTime, " to "+toDateTime)
 	Month := strings.ToUpper(time.Now().Month().String())
-	values := db.GetLatestDataFromSQL(fromDateTime)
+	dbValues := db.GetLatestDataFromSQL(fromDateTime, toDateTime)
 	SheetName := configs.Configurations.SheetNameWithoutRange + Month
 	sheets.CreateSheetIfNotPresent(SheetName)
-	// values := sheets.BatchGet("IOM_Analysis_SEP!A2:Z5000")
-	fmt.Println(values)
-	finalvalues := purchase.GetFinalValuesFormatted(values)
+	valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + Month + "!A2:Z5000")
+	AppendIndex := len(valuesFromSheet) + 1
+	LastIndex := 0
+	if len(valuesFromSheet) > 2 {
+		var err error
+		LastIndex, err = strconv.Atoi(valuesFromSheet[len(valuesFromSheet)-1][0])
+		if err != nil {
+			LastIndex = 1
+		}
+	}
+	finalvalues := purchase.GetFinalValuesFormatted(dbValues, LastIndex)
 	fmt.Println("FinalValues from Sheet are:")
 	fmt.Println(finalvalues)
-	sheets.BatchAppend(SheetName, finalvalues)
+	sheets.BatchAppend(SheetName+"!A"+strconv.Itoa(AppendIndex), finalvalues)
 }
