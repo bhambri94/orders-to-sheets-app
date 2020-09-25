@@ -20,7 +20,7 @@ func main() {
 	HoursCount := configs.Configurations.BCFLOldDateInHours
 	fromDateTime = currentTime.Add(time.Duration(-HoursCount) * time.Hour).Format("2006-01-02")
 	toDateTime = currentTime.Format("2006-01-02")
-	fmt.Println("Fetching results from Date: "+fromDateTime, " to "+toDateTime)
+	fmt.Println("Fetching BCFL results from Date: "+fromDateTime, " to "+toDateTime)
 	Month := strings.ToUpper(time.Now().Month().String())
 	dbValues := db.GetLatestDataFromSQL(configs.Configurations.BCFLDatabaseName, fromDateTime, toDateTime)
 	orderType := []string{"STR", "RM", "LOC", "FGT"}
@@ -46,6 +46,10 @@ func main() {
 		time.Sleep(1000 * time.Millisecond)
 	}
 
+	HoursCount = configs.Configurations.VRLOldDateInHours
+	fromDateTime = currentTime.Add(time.Duration(-HoursCount) * time.Hour).Format("2006-01-02")
+	toDateTime = currentTime.Format("2006-01-02")
+	fmt.Println("Fetching VRL results from Date: "+fromDateTime, " to "+toDateTime)
 	dbValues = db.GetLatestDataFromSQL(configs.Configurations.VRLDatabaseName, fromDateTime, toDateTime)
 	iterator = 0
 	for iterator < len(orderType) {

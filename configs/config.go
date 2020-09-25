@@ -18,7 +18,7 @@ type Configs struct {
 	Password              string `json:"Password"`
 	Query                 string `json:"Query"`
 	BCFLOldDateInHours    int    `json:"BCFLOldDateInHours"`
-	VRLLOldDateInHours    int    `json:"VRLLOldDateInHours"`
+	VRLOldDateInHours     int    `json:"VRLOldDateInHours"`
 }
 
 var (
