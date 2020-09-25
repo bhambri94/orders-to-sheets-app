@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func GetFinalValuesFormatted(values [][]interface{}, LastIndex int) [][]interface{} {
+func GetFinalValuesFormatted(values [][]interface{}, LastIndex int, OrderType string) [][]interface{} {
 	var finalValues [][]interface{}
 	iterator := 0
 	SiNo := LastIndex
@@ -18,7 +18,7 @@ func GetFinalValuesFormatted(values [][]interface{}, LastIndex int) [][]interfac
 			continue
 		}
 
-		if !strings.Contains(values[iterator][4].(string), "STR") {
+		if !strings.Contains(values[iterator][4].(string), OrderType) {
 			iterator++
 			continue
 		}

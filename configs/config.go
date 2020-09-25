@@ -8,14 +8,17 @@ import (
 )
 
 type Configs struct {
-	SpreadsheetID         string `json:"SpreadsheetID"`
+	BCFLSpreadsheetID     string `json:"BCFLSpreadsheetID"`
+	VRLSpreadsheetID      string `json:"VRLSpreadsheetID"`
 	SheetNameWithoutRange string `json:"SheetNameWithoutRange"`
 	MSSQLHost             string `json:"MSSQLHost"`
-	DatabaseName          string `json:"DatabaseName"`
+	BCFLDatabaseName      string `json:"BCFLDatabaseName"`
+	VRLDatabaseName       string `json:"VRLDatabaseName"`
 	UserName              string `json:"UserName"`
 	Password              string `json:"Password"`
 	Query                 string `json:"Query"`
-	OldDateInHours        int    `json:"OldDateInHours"`
+	BCFLOldDateInHours    int    `json:"BCFLOldDateInHours"`
+	VRLLOldDateInHours    int    `json:"VRLLOldDateInHours"`
 }
 
 var (

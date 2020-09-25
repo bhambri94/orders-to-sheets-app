@@ -1,10 +1,13 @@
 {
-    "SpreadsheetID" : "1UNAEkBl-roGkPt1hVR2ABguxrgq-ETvAs1VYxDs747w",
+    "BCFLSpreadsheetID" : "1UNAEkBl-roGkPt1hVR2ABguxrgq-ETvAs1VYxDs747w",
+    "VRLSpreadsheetID" : "1Q86SVgKSkuIL0rQLJNJvjZmSONKztmc0Zsk5qfwJe_o",
     "SheetNameWithoutRange":"IOM_Analysis_",
     "MSSQLHost":"localhost",
-    "DatabaseName":"TestDB",
+    "BCFLDatabaseName":"TestDB",
+    "VRLDatabaseName":"TestDB",
     "UserName":"SA",
     "Password":"Test@1234",
     "Query":"Execute BI_IOM_Analysis_Data",
-    "OldDateInHours":72
+    "BCFLOldDateInHours":576,
+    "VRLOldDateInHours":576
 }

@@ -8,7 +8,6 @@ import (
 	"log"
 	"os"
 
-	config "github.com/bhambri94/orders-to-sheets-app/configs"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/sheets/v4"
@@ -16,6 +15,10 @@ import (
 
 var srv *sheets.Service
 var spreadsheetId string
+
+func SetSpreadSheetID(SpreadSheetFile string) {
+	spreadsheetId = SpreadSheetFile
+}
 
 // Retrieve a token, saves the token, then returns the generated client.
 func getClient() *sheets.Service {
@@ -92,7 +95,6 @@ func Read(readRange string) {
 	if srv == nil {
 		srv = getClient()
 	}
-	spreadsheetId = config.Configurations.SpreadsheetID
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from sheet: %v", err)
@@ -111,7 +113,6 @@ func BatchWrite(SheetName string, value [][]interface{}) {
 	if srv == nil {
 		srv = getClient()
 	}
-	spreadsheetId = config.Configurations.SpreadsheetID
 	rb := &sheets.BatchUpdateValuesRequest{
 		ValueInputOption: "USER_ENTERED",
 	}
@@ -142,7 +143,6 @@ func BatchGet(SheetRange string) [][]string {
 	if srv == nil {
 		srv = getClient()
 	}
-	spreadsheetId = config.Configurations.SpreadsheetID
 	resp, err := srv.Spreadsheets.Values.BatchGet(spreadsheetId).Ranges(ranges...).Context(context.Background()).Do()
 	if err != nil {
 		log.Fatal(err)
@@ -165,7 +165,6 @@ func BatchAppend(SheetName string, value [][]interface{}) {
 		srv = getClient()
 	}
 
-	spreadsheetId := config.Configurations.SpreadsheetID
 	valueInputOption := "RAW"
 	insertDataOption := "INSERT_ROWS"
 	rb := &sheets.ValueRange{
@@ -186,7 +185,6 @@ func ClearSheet(SheetName string) {
 	if srv == nil {
 		srv = getClient()
 	}
-	spreadsheetId = config.Configurations.SpreadsheetID
 	_, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
 	if err != nil {
 		fmt.Printf("Unable to retrieve data from sheet name: %v", err)
@@ -228,7 +226,6 @@ func CreateSheetIfNotPresent(SheetName string) {
 	if srv == nil {
 		srv = getClient()
 	}
-	spreadsheetId = config.Configurations.SpreadsheetID
 	_, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
 	if err != nil {
 		fmt.Printf("Unable to retrieve data from sheet name: %v", err)

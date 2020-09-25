@@ -10,10 +10,10 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
-func GetLatestDataFromSQL(fromDateTime string, toDateTime string) [][]interface{} {
+func GetLatestDataFromSQL(databaseName string, fromDateTime string, toDateTime string) [][]interface{} {
 	var DBConnection *sql.DB
 	var err error
-	connectString := "sqlserver://" + configs.Configurations.UserName + ":" + configs.Configurations.Password + "@" + configs.Configurations.MSSQLHost + "?database=" + configs.Configurations.DatabaseName + "&connection+timeout=300"
+	connectString := "sqlserver://" + configs.Configurations.UserName + ":" + configs.Configurations.Password + "@" + configs.Configurations.MSSQLHost + "?database=" + databaseName + "&connection+timeout=300"
 	println("opening sql connection with connstring:" + connectString)
 
 	RetryCounter := 0
