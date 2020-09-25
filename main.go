@@ -44,6 +44,7 @@ func main() {
 		fmt.Println(finalvalues)
 		sheets.BatchAppend(SheetName+"!A"+strconv.Itoa(AppendIndex), finalvalues)
 		time.Sleep(1000 * time.Millisecond)
+		iterator++
 	}
 
 	HoursCount = configs.Configurations.VRLOldDateInHours
@@ -71,5 +72,6 @@ func main() {
 		fmt.Println(finalvalues)
 		sheets.BatchAppend(SheetName+"!A"+strconv.Itoa(AppendIndex), finalvalues)
 		time.Sleep(1000 * time.Millisecond)
+		iterator++
 	}
 }
