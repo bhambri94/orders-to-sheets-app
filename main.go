@@ -50,7 +50,7 @@ func main() {
 		finalvalues := purchase.GetFinalValuesFormatted(dbValues, LastIndex, orderType[iterator])
 		fmt.Println("FinalValues for BCFL Sheet are:")
 		fmt.Println(finalvalues)
-		sheets.BatchAppend(SheetName+"!A"+strconv.Itoa(AppendIndex)+":W5000", finalvalues)
+		sheets.BatchWrite(SheetName+"!A"+strconv.Itoa(AppendIndex)+":W5000", finalvalues)
 		time.Sleep(1000 * time.Millisecond)
 		iterator++
 	}
@@ -86,7 +86,7 @@ func main() {
 		finalvalues := purchase.GetFinalValuesFormatted(dbValues, LastIndex, orderType[iterator])
 		fmt.Println("FinalValues for VRL Sheet are:")
 		fmt.Println(finalvalues)
-		sheets.BatchAppend(SheetName+"!A"+strconv.Itoa(AppendIndex)+":W5000", finalvalues)
+		sheets.BatchWrite(SheetName+"!A"+strconv.Itoa(AppendIndex)+":W5000", finalvalues)
 		time.Sleep(1000 * time.Millisecond)
 		iterator++
 	}
