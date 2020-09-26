@@ -37,7 +37,7 @@ func main() {
 			sheets.SetSpreadSheetID(configs.Configurations.BCFLFGTSpreadsheetID)
 		}
 		sheets.CreateSheetIfNotPresent(SheetName)
-		valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month + "!A2:Z5000")
+		valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month + "!A2:W5000")
 		AppendIndex := len(valuesFromSheet) + 1
 		LastIndex := 0
 		if len(valuesFromSheet) > 2 {
@@ -73,7 +73,7 @@ func main() {
 			sheets.SetSpreadSheetID(configs.Configurations.VRLFGTSpreadsheetID)
 		}
 		sheets.CreateSheetIfNotPresent(SheetName)
-		valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month + "!A2:Z5000")
+		valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month + "!A2:W5000")
 		AppendIndex := len(valuesFromSheet) + 1
 		LastIndex := 0
 		if len(valuesFromSheet) > 2 {
