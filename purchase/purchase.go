@@ -50,6 +50,7 @@ func GetFinalValuesFormatted(values [][]interface{}, LastIndex int, OrderType st
 				firstElement = false
 			}
 			if i > 22 {
+				i++
 				continue
 			}
 			row = append(row, values[iterator][i])
