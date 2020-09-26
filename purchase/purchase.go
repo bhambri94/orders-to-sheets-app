@@ -11,6 +11,7 @@ func GetFinalValuesFormatted(values [][]interface{}, LastIndex int, OrderType st
 	SiNo := LastIndex
 	ItemCode := ""
 	BlankRow := []interface{}{""}
+	finalValues = append(finalValues, BlankRow)
 	for iterator < len(values) {
 		var row []interface{}
 		if len(values[iterator]) < 5 {
