@@ -8,8 +8,14 @@ import (
 )
 
 type Configs struct {
-	BCFLSpreadsheetID     string `json:"BCFLSpreadsheetID"`
-	VRLSpreadsheetID      string `json:"VRLSpreadsheetID"`
+	BCFLSTRSpreadsheetID  string `json:"BCFLSTRSpreadsheetID"`
+	BCFLGPSpreadsheetID   string `json:"BCFLGPSpreadsheetID"`
+	BCFLLOCSpreadsheetID  string `json:"BCFLLOCSpreadsheetID"`
+	BCFLFGTSpreadsheetID  string `json:"BCFLFGTSpreadsheetID"`
+	VRLSTRSpreadsheetID   string `json:"VRLSTRSpreadsheetID"`
+	VRLGPSpreadsheetID    string `json:"VRLGPSpreadsheetID"`
+	VRLLOCSpreadsheetID   string `json:"VRLLOCSpreadsheetID"`
+	VRLFGTSpreadsheetID   string `json:"VRLFGTSpreadsheetID"`
 	SheetNameWithoutRange string `json:"SheetNameWithoutRange"`
 	MSSQLHost             string `json:"MSSQLHost"`
 	BCFLDatabaseName      string `json:"BCFLDatabaseName"`

@@ -23,11 +23,19 @@ func main() {
 	fmt.Println("Fetching BCFL results from Date: "+fromDateTime, " to "+toDateTime)
 	Month := strings.ToUpper(time.Now().Month().String())
 	dbValues := db.GetLatestDataFromSQL(configs.Configurations.BCFLDatabaseName, fromDateTime, toDateTime)
-	orderType := []string{"STR", "RM", "LOC", "FGT"}
+	orderType := []string{"STR", "GP", "LOC", "FGT"}
 	iterator := 0
 	for iterator < len(orderType) {
 		SheetName := configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month
-		sheets.SetSpreadSheetID(configs.Configurations.BCFLSpreadsheetID)
+		if iterator == 0 {
+			sheets.SetSpreadSheetID(configs.Configurations.BCFLSTRSpreadsheetID)
+		} else if iterator == 1 {
+			sheets.SetSpreadSheetID(configs.Configurations.BCFLGPSpreadsheetID)
+		} else if iterator == 2 {
+			sheets.SetSpreadSheetID(configs.Configurations.BCFLLOCSpreadsheetID)
+		} else if iterator == 3 {
+			sheets.SetSpreadSheetID(configs.Configurations.BCFLFGTSpreadsheetID)
+		}
 		sheets.CreateSheetIfNotPresent(SheetName)
 		valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month + "!A2:Z5000")
 		AppendIndex := len(valuesFromSheet) + 1
@@ -55,7 +63,15 @@ func main() {
 	iterator = 0
 	for iterator < len(orderType) {
 		SheetName := configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month
-		sheets.SetSpreadSheetID(configs.Configurations.VRLSpreadsheetID)
+		if iterator == 0 {
+			sheets.SetSpreadSheetID(configs.Configurations.VRLSTRSpreadsheetID)
+		} else if iterator == 1 {
+			sheets.SetSpreadSheetID(configs.Configurations.VRLGPSpreadsheetID)
+		} else if iterator == 2 {
+			sheets.SetSpreadSheetID(configs.Configurations.VRLLOCSpreadsheetID)
+		} else if iterator == 3 {
+			sheets.SetSpreadSheetID(configs.Configurations.VRLFGTSpreadsheetID)
+		}
 		sheets.CreateSheetIfNotPresent(SheetName)
 		valuesFromSheet := sheets.BatchGet(configs.Configurations.SheetNameWithoutRange + orderType[iterator] + "_" + Month + "!A2:Z5000")
 		AppendIndex := len(valuesFromSheet) + 1
