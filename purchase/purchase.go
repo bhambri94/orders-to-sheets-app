@@ -25,16 +25,16 @@ func GetFinalValuesFormatted(values [][]interface{}, LastIndex int, OrderType st
 		}
 
 		if len(values[iterator][3].(string)) > 10 {
-			values[iterator][3] = values[iterator][3].(string)[:10]
+			values[iterator][3] = values[iterator][3].(string)[5:10]
 		}
 		if len(values[iterator][5].(string)) > 10 {
-			values[iterator][5] = values[iterator][5].(string)[:10]
+			values[iterator][5] = values[iterator][5].(string)[5:10]
 		}
 		if len(values[iterator][12].(string)) > 10 {
-			values[iterator][12] = values[iterator][12].(string)[:10]
+			values[iterator][12] = values[iterator][12].(string)[5:10]
 		}
 		if len(values[iterator][21].(string)) > 10 {
-			values[iterator][21] = values[iterator][21].(string)[:10]
+			values[iterator][21] = values[iterator][21].(string)[5:10]
 		}
 
 		if ItemCode != values[iterator][6] {
